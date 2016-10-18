@@ -79,6 +79,10 @@ class Preview extends Component {
       return;
     }
 
+    if (true === nextProps.refresh && window.Reveal) {
+      window.Reveal.layout();
+    }
+
     if (this.props.position !== nextProps.position || 1 === nextProps.position) {
       if (this.requestAnimationId) {
         window.cancelAnimationFrame(this.requestAnimationId);
@@ -217,10 +221,12 @@ Preview.propTypes = {
   position: PropTypes.number.isRequired,
   previewLoader: PropTypes.func.isRequired,
   onClickCheckbox: PropTypes.func.isRequired,
+  refresh: PropTypes.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
 };
 
 Preview.defaultProps = {
   previewLoader,
+  refresh: false,
 };
 
 export default Preview;

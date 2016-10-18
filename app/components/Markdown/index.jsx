@@ -40,6 +40,13 @@ export default class Markdown extends Component {
     if (true === nextProps.forceUpdate && this.props.content !== nextProps.content) {
       this.getCodeMirror().setValue(nextProps.content);
     }
+
+    if (true === nextProps.refresh) {
+      const s = this.getCodeMirror().getSelection();
+
+      this.getCodeMirror().refresh();
+      this.getCodeMirror().setSelection(s);
+    }
   }
 
   shouldComponentUpdate() {
@@ -95,4 +102,9 @@ Markdown.propTypes = {
   onUpdatePosition: PropTypes.func.isRequired,
   // eslint rule disabled becasue false positive
   forceUpdate: PropTypes.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
+  refresh: PropTypes.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
+};
+
+Markdown.defaultProps = {
+  refresh: false,
 };

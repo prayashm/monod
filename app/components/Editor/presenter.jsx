@@ -19,24 +19,19 @@ export default class Editor extends Component {
     this.state = {
       position: 0,
       mode: EditorModes.PREVIEW,
+      refresh: false,
     };
 
     this.updatePosition = this.updatePosition.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
   }
 
-  componentDidUpdate() {
-    if (window.Reveal) {
-      window.Reveal.layout();
-    }
-  }
-
   updatePosition(position) {
-    this.setState({ position });
+    this.setState({ position, refresh: false });
   }
 
   updateMode(newMode) {
-    this.setState({ mode: newMode });
+    this.setState({ mode: newMode, refresh: true });
   }
 
   handleOnClick(e) {
@@ -66,6 +61,7 @@ export default class Editor extends Component {
           onChange={this.props.onUpdateContent}
           onUpdatePosition={this.updatePosition}
           forceUpdate={this.props.forceUpdate}
+          refresh={this.state.refresh}
         />
         <VerticalHandler
           onClickLeft={this.handleOnClick}
@@ -76,6 +72,7 @@ export default class Editor extends Component {
           position={this.state.position}
           template={this.props.template}
           onClickCheckbox={this.props.onClickCheckbox}
+          refresh={this.state.refresh}
         />
       </Loader>
     );
